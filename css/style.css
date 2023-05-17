@@ -1,0 +1,150 @@
+
+.whole-display {
+	width: 375px;
+	font-family: 'Zen Maru Gothic', sans-serif;
+}
+
+.finger {
+	width : 34px; /* size of finger image */
+}
+
+.fingerR {
+	width : 133px; /* size of finger2 image */
+}
+
+.finger-space {
+	height: 1px;
+}
+
+.modal-palette {
+	width: 300px;
+}
+
+.modal-menu {
+	width: 150px;
+}
+
+.modal-license {
+	width: 350px;
+}
+
+.color-1 { /* index.php */
+	height: 50px;
+	cursor: pointer;
+	border: 1px solid rgba(200,200,200,.5);
+}
+
+.color-2 { /* index.php */
+	height: 50px;
+	cursor: pointer;
+	border: 1px solid rgba(200,200,200,.5);
+}
+
+.color1 { /* mix-more.php */
+	height: 50px;
+	cursor: pointer;
+	border: 1px solid rgba(200,200,200,.5);
+}
+
+.color2 { /* mix-more.php */
+	height: 50px;
+	cursor: pointer;
+	border: 1px solid rgba(200,200,200,.5);
+}
+
+.color3 { /* mix-more.php */
+	height: 50px;
+	cursor: pointer;
+	border: 1px solid rgba(200,200,200,.5);
+}
+
+.color4 { /* mix-more.php */
+	height: 50px;
+	cursor: pointer;
+	border: 1px solid rgba(200,200,200,.5);
+}
+
+.color5 { /* mix-more.php */
+	height: 50px;
+	cursor: pointer;
+	border: 1px solid rgba(200,200,200,.5);
+}
+
+.color6 { /* mix-more.php */
+	height: 50px;
+	cursor: pointer;
+	border: 1px solid rgba(200,200,200,.5);
+}
+
+.result { /* mixed color in index.php */
+	height: 60px;
+}
+
+.resultw { /* mixed color with white in index.php */
+	height: 60px;
+}
+
+.resultm { /* mixed color in mix-more.php */
+	width : 65px;
+	height: 65px;
+	border-radius: 50%;
+	border: 1px solid rgba(200,200,200,.5);
+}
+
+.result1 {
+	width : 35px;
+	height: 35px;
+	border-radius: 50%;
+	border: 1px solid rgba(200,200,200,.5);
+}
+
+.result2 {
+	width : 35px;
+	height: 35px;
+	border-radius: 50%;
+	border: 1px solid rgba(200,200,200,.5);
+}
+
+.result3 {
+	width : 35px;
+	height: 35px;
+	border-radius: 50%;
+	border: 1px solid rgba(200,200,200,.5);
+}
+
+.result1B {
+	width : 30px;
+	height: 30px;
+	border-radius: 50%;
+	border: 1px solid rgba(200,200,200,.5);
+}
+
+.result2B {
+	width : 30px;
+	height: 30px;
+	border-radius: 50%;
+	border: 1px solid rgba(200,200,200,.5);
+}
+
+.result3B {
+	width : 30px;
+	height: 30px;
+	border-radius: 50%;
+	border: 1px solid rgba(200,200,200,.5);
+}
+
+.break-down {
+	width : 8px;
+	height: 8px;
+	border-radius: 25%;
+	border: 1px solid rgba(200,200,200,.5);
+}
+
+.z-2 {
+	z-index: 2;
+}
+
+.z-9 {
+	z-index: 9;
+	position: relative;
+}
