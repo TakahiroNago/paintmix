@@ -93,7 +93,7 @@
 				<div class="float-start">
 					<form action="index.php" method="post">
 						<button type="submit" class="text-decoration-none bg-transparent border-0">
-							<h1 class="text-muted text-center display-5 fw-bold"><span class="text-info">P</span>aint<span class="text-danger">M</span>ix<i class="fa-solid fa-palette"></i></h1>
+							<h1 class="text-muted text-center display-6 fw-bold"><span class="text-info">P</span>aint<span class="text-danger">M</span>ix<i class="fa-solid fa-palette"></i></h1>
 							<span id="langPhp"><input type="hidden" name="language_php" value="en"></span>
 							<span id="touchPhp"><input type="hidden" name="touch_php" value="false"></span>
 							<span id="touchRPhp"><input type="hidden" name="touchR_php" value="false"></span>
