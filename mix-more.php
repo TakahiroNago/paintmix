@@ -87,26 +87,32 @@
 	$color6 = 6;  // ultramarine blue
 	?>
 
-	<div class="container mt-3 whole-display">
+	<div class="container mt-2 whole-display">
 		<div class="row mx-auto">
 			<div class="col">
-				<div class="float-start">
-					<form action="index.php" method="post">
-						<button type="submit" class="text-decoration-none bg-transparent border-0">
-							<h1 class="text-muted text-center display-6 fw-bold"><span class="text-info">P</span>aint<span class="text-danger">M</span>ix<i class="fa-solid fa-palette"></i></h1>
-							<span id="langPhp"><input type="hidden" name="language_php" value="en"></span>
-							<span id="touchPhp"><input type="hidden" name="touch_php" value="false"></span>
-							<span id="touchRPhp"><input type="hidden" name="touchR_php" value="false"></span>
-							<span id="touchMPhp"><input type="hidden" name="touchM_php" value="false"></span>
-							<span id="colorNamePhp"><input type="hidden" name="color_name_php" value="false"></span>
+				<div class="row">
+
+					<div class="col">
+						<form action="index.php" method="post">
+							<button type="submit" class="text-decoration-none bg-transparent border-0">
+								<h1 class="text-muted text-center display-6 fw-bold"><span class="text-info">P</span>aint<span class="text-danger">M</span>ix<i class="fa-solid fa-palette"></i></h1>
+								<span id="langPhp"><input type="hidden" name="language_php" value="en"></span>
+								<span id="touchPhp"><input type="hidden" name="touch_php" value="false"></span>
+								<span id="touchRPhp"><input type="hidden" name="touchR_php" value="false"></span>
+								<span id="touchMPhp"><input type="hidden" name="touchM_php" value="false"></span>
+								<span id="colorNamePhp"><input type="hidden" name="color_name_php" value="false"></span>
+							</button>
+						</form>
+					</div>
+
+					<div class="col-auto">
+						<!-- option menu button-->
+						<button class="btn border float-end" type="button"  data-bs-toggle="modal" data-bs-target="#menuModal">
+							<i class="fa-solid fa-bars"></i>
 						</button>
-					</form>
+					</div>
 				</div>
 
-				<!-- option menu button-->
-				<button class="btn border float-end" type="button"  data-bs-toggle="modal" data-bs-target="#menuModal">
-					<i class="fa-solid fa-bars"></i>
-				</button>
 
 				<!-- option menu modal -->
 				<?php
@@ -123,10 +129,10 @@
 				<div class="container border px-3 rounded">
 					<div class="row">
 						<div class="col">
-							<div class="row mt-3">
+							<div class="row mt-2">
 
 								<!-- Color 1 -->
-								<div class="col-5 text-center mb-2">
+								<div class="col-5 text-center mb-1">
 									<span class="fw-bold text-muted" id="text1">
 										Color1
 									</span>
@@ -137,7 +143,7 @@
 									<div class="finger-space">
 										<span id="fingerR"></span>
 									</div>
-									<input type="range" value="10" min="0" max="20" id="ratio1" class="mt-2 form-range z-2">
+									<input type="range" value="10" min="0" max="20" id="ratio1" class="mt-1 form-range z-2">
 								</div>
 								
 								<!-- mix of Color 1 and Color 2 (Color 7) -->
@@ -148,25 +154,25 @@
 								</div>
 
 								<!-- Color 2 -->
-								<div class="col-5 text-center mb-2">
+								<div class="col-5 text-center mb-1">
 									<span class="fw-bold text-muted" id="text2">
 										Color2
 									</span>
 									<div class="finger-space"></div>
 									<div class="rounded color2 fw-bold d-flex align-items-center justify-content-center small" id="color2" onclick="touched()" data-bs-toggle="modal" data-bs-target="#colorModal2"></div>
 									<div class="finger-space"></div>
-									<input type="range" value="10" min="0" max="20" id="ratio2" class="mt-2 form-range z-2">
+									<input type="range" value="10" min="0" max="20" id="ratio2" class="mt-1 form-range z-2">
 								</div>
 
 								<!-- Color 3 -->
-								<div class="col-5 text-center mb-2">
+								<div class="col-5 text-center mb-1">
 									<span class="fw-bold text-muted" id="text3">
 										Color3
 									</span>
 									<div class="finger-space"></div>
 									<div class="rounded color3 fw-bold d-flex align-items-center justify-content-center small" id="color3" onclick="touched()" data-bs-toggle="modal" data-bs-target="#colorModal3"></div>
 									<div class="finger-space"></div>
-									<input type="range" value="10" min="0" max="20" id="ratio3" class="mt-2 form-range z-2">
+									<input type="range" value="10" min="0" max="20" id="ratio3" class="mt-1 form-range z-2">
 								</div>
 								
 								<!-- mix of Color 3 and Color 4 (Color 8) -->
@@ -175,25 +181,25 @@
 								</div>
 
 								<!-- Color 4 -->
-								<div class="col-5 text-center mb-2">
+								<div class="col-5 text-center mb-1">
 									<span class="fw-bold text-muted" id="text4">
 										Color4
 									</span>
 									<div class="finger-space"></div>
 									<div class="rounded color4 fw-bold d-flex align-items-center justify-content-center small" id="color4" onclick="touched()" data-bs-toggle="modal" data-bs-target="#colorModal4"></div>
 									<div class="finger-space"></div>
-									<input type="range" value="10" min="0" max="20" id="ratio4" class="mt-2 form-range z-2">
+									<input type="range" value="10" min="0" max="20" id="ratio4" class="mt-1 form-range z-2">
 								</div>
 
 								<!-- Color 5 -->
-								<div class="col-5 text-center mb-2">
+								<div class="col-5 text-center mb-1">
 									<span class="fw-bold text-muted" id="text5">
 										Color5
 									</span>
 									<div class="finger-space"></div>
 									<div class="rounded color5 fw-bold d-flex align-items-center justify-content-center small" id="color5" onclick="touched()" data-bs-toggle="modal" data-bs-target="#colorModal5"></div>
 									<div class="finger-space"></div>
-									<input type="range" value="10" min="0" max="20" id="ratio5" class="mt-2 form-range z-2">
+									<input type="range" value="10" min="0" max="20" id="ratio5" class="mt-1 form-range z-2">
 								</div>
 								
 								<!-- mix of Color 5 and Color 6 (Color 9) -->
@@ -202,14 +208,14 @@
 								</div>
 
 								<!-- Color 6 -->
-								<div class="col-5 text-center mb-2">
+								<div class="col-5 text-center mb-1">
 									<span class="fw-bold text-muted" id="text6">
 										Color6
 									</span>
 									<div class="finger-space"></div>
 									<div class="rounded color6 fw-bold d-flex align-items-center justify-content-center small" id="color6" onclick="touched()" data-bs-toggle="modal" data-bs-target="#colorModal6"></div>
 									<div class="finger-space"></div>
-									<input type="range" value="10" min="0" max="20" id="ratio6" class="mt-2 form-range z-2">
+									<input type="range" value="10" min="0" max="20" id="ratio6" class="mt-1 form-range z-2">
 								</div>
 
 							</div>
@@ -222,7 +228,7 @@
 							?>
 							
 							<!-- color mix result -->
-							<div class="row mt-3 mx-auto">
+							<div class="row mt-2 mx-auto">
 								<div class="d-flex justify-content-center align-items-center">
 									<!-- result1 -->
 									<div class="result1B" id="result1B"></div>

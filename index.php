@@ -87,23 +87,30 @@
 	<div class="container mt-3 whole-display">
 		<div class="row mx-auto">
 			<div class="col">
-				<div class="float-start">
-					<form action="index.php" method="post">
-						<button type="submit" class="text-decoration-none bg-transparent border-0">
-							<h1 class="text-muted text-center display-6 fw-bold"><span class="text-info">P</span>aint<span class="text-danger">M</span>ix<i class="fa-solid fa-palette"></i></h1>
-							<span id="langPhp"><input type="hidden" name="language_php" value="en"></span>
-							<span id="touchPhp"><input type="hidden" name="touch_php" value="false"></span>
-							<span id="touchRPhp"><input type="hidden" name="touchR_php" value="false"></span>
-							<span id="touchMPhp"><input type="hidden" name="touchM_php" value="false"></span>
-							<span id="colorNamePhp"><input type="hidden" name="color_name_php" value="false"></span>
+				<div class="row">
+
+					<div class="col">
+						<form action="index.php" method="post">
+							<button type="submit" class="text-decoration-none bg-transparent border-0">
+								<h1 class="text-muted text-center display-6 fw-bold"><span class="text-info">P</span>aint<span class="text-danger">M</span>ix<i class="fa-solid fa-palette"></i></h1>
+								<span id="langPhp"><input type="hidden" name="language_php" value="en"></span>
+								<span id="touchPhp"><input type="hidden" name="touch_php" value="false"></span>
+								<span id="touchRPhp"><input type="hidden" name="touchR_php" value="false"></span>
+								<span id="touchMPhp"><input type="hidden" name="touchM_php" value="false"></span>
+								<span id="colorNamePhp"><input type="hidden" name="color_name_php" value="false"></span>
+							</button>
+						</form>
+					</div>
+
+					<div class="col-auto">
+						<!-- option menu button-->
+						<button class="btn border float-end" type="button"  data-bs-toggle="modal" data-bs-target="#menuModal">
+							<i class="fa-solid fa-bars"></i>
 						</button>
-					</form>
+					</div>
+
 				</div>
 
-				<!-- option menu button-->
-				<button class="btn border float-end" type="button"  data-bs-toggle="modal" data-bs-target="#menuModal">
-					<i class="fa-solid fa-bars"></i>
-				</button>
 
 				<!-- option menu modal -->
 				<?php
@@ -121,7 +128,7 @@
 				<div class="container border px-3 rounded">
 					<div class="row">
 						<div class="col">
-							<div class="row mt-3">
+							<div class="row mt-2">
 
 								<!-- color 1 -->
 								<div class="col text-center">
@@ -151,7 +158,7 @@
 							?>
 				
 							<!-- input range for color ratio -->
-							<div class="row mt-4">
+							<div class="row mt-3">
 								<div class="col text-center">
 									<label for="ratio" class="fw-bold text-muted" id="text3">Mix Ratio</label>
 									<div class="finger-space">
@@ -164,7 +171,7 @@
 							</div>
 							
 							<!-- color mix result -->
-							<div class="row mt-2">
+							<div class="row mt-1">
 								<div class="col">
 									<div class="rounded result" id="result">
 									</div>
@@ -172,7 +179,7 @@
 							</div>
 
 							<!-- input range to mix white -->
-							<div class="row mt-4">
+							<div class="row mt-3">
 								<div class="col text-center">
 									<label for="ratio" class="fw-bold text-muted" id="text4">Mix with White</label>
 									<div class="rounded finger-space"></div>
@@ -189,7 +196,7 @@
 							</div>
 
 							<!-- add white result -->
-							<div class="row mt-2">
+							<div class="row mt-1">
 								<div class="col">
 									<div class="rounded resultw" id="resultw">
 									</div>
