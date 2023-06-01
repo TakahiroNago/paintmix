@@ -1,19 +1,55 @@
-if(firstVisit === 'true'){
+// for debug
+// localStorage.clear();
+
+// set language for first visitor
+function langSetting(){
 	//get the browser language
-	var lang = (navigator.language) ? navigator.language : navigator.userLanguage;
-	
-	//if language is undefined, set language English
-	if(lang === undefined)
-		lang = 'en';
+	var language = (navigator.language) ? navigator.language : navigator.userLanguage;
 	
 	//when language is Japanese, change language to Japanese
-	if(lang.toLowerCase().indexOf("ja") !== -1){
+	if(language.toLowerCase().indexOf("ja") !== -1){
 		langJa();
+	}else{
+		langEn();
 	}
+}
+if(!localStorage.getItem("visited")){
+	localStorage.setItem("visited", true);
+	localStorage.setItem("touched", 'false');
+	localStorage.setItem("touchedR", 'false');
+	localStorage.setItem("touchedM", 'false');
+	localStorage.setItem("nameDisp", 'true');
+	langSetting();
+}else{
+	var language = localStorage.getItem("lang");
 }
 
 //initiation of variables
-var t  = 0.5;         // mixing ratio
+if(localStorage.getItem("touched") == 'true'){
+	var touch = true;
+}else{
+	var touch = false;
+}
+
+if(localStorage.getItem("touchedR") == 'true'){
+	var touchR = true;
+}else{
+	var touchR = false;
+}
+
+if(localStorage.getItem("touchedM") == 'true'){
+	var touchM = true;
+}else{
+	var touchM = false;
+}
+
+if(localStorage.getItem("nameDisp") == 'true'){
+	var colorName = true;
+}else{
+	var colorName = false;
+}
+
+var t  = 0.5;         // mix ratio
 var tw = 0.5;         // white ratio
 var rgbw = "#f3f4f7"; // white color rgb: titanium white
 
@@ -38,66 +74,76 @@ color2.style.background = rgb2;
 result.style.background = mixed;
 resultw.style.background = mixedw;
 
-//change language
+//change language to Japanese if language is ja
 if(language === 'ja'){
 	langJa();
 }
 
-//color name text off when colorName is false
-if(colorName === 'true'){
+//set color name display
+if(colorName){
 	showName();
+}else{
+	hideName();
 }
 
 //show finger icon on color modal when not touched
-if(touch === 'false'){
+if(!touch){
 	window.setTimeout(showFinger, 3000);
-}else{
-	//change value for post method
-	touchPhp.innerHTML = '<input type="hidden" name="touch_php" value="true">';
-	touchPhp2.innerHTML = '<input type="hidden" name="touch_php" value="true">';
 }
 function showFinger(){
-	if(touch === 'false'){
+	if(!touch){
 		finger.innerHTML = '<img src="img/finger.gif" onclick="touched()" class="mt-3 z-9 finger">';
 	}
 }
 
 //show finger icon on range input when range is not touched and color modal is touched
-if(touchR === 'false' && touch === 'true'){
+if((!touchR) && touch){
 	setTimeout(showFingerR, 3000);
-}else if(touchR === 'true'){
-	touchRPhp.innerHTML = '<input type="hidden" name="touchR_php" value="true">'; 
-	touchRPhp2.innerHTML = '<input type="hidden" name="touchR_php" value="true">'; 
 }
 function showFingerR(){
-	if(touchR === 'false'){
+	if(!touchR){
 		fingerR.innerHTML = '<img src="img/fingerR.gif" onclick="touchedR()" class="mt-3 z-9 fingerR">';
 	}
 }
 
-//pass the value to post method link
-if(touchM === 'true'){
-	touchMPhp.innerHTML = '<input type="hidden" name="touchM_php" value="true">'; 
-	touchMPhp2.innerHTML = '<input type="hidden" name="touchM_php" value="true">'; 
+//show finger icon on mixed color when mixed color is not touched, and color and range is touched
+if((!touchM) && touch && touchR){
+	setTimeout(showFingerM, 3000);
+}
+function showFingerM(){
+	if(!touchM){
+		fingerM.innerHTML = '<img src="img/finger.gif" onclick="touchedM()" class="pt-4 z-9 fingerM">';
+	}
 }
 
 //check if color modal is touched
 function touched(){
-	touch = 'true';
+	touch = true;
+	localStorage.setItem("touched", 'true');
 	finger.innerHTML = '';
-	touchPhp.innerHTML = '<input type="hidden" name="touch_php" value="true">';
-	touchPhp2.innerHTML = '<input type="hidden" name="touch_php" value="true">';
-	if(touchR === 'false'){
+	if(!touchR){
 		setTimeout(showFingerR, 3000);
+	}
+	if(!touchM && touchR){
+		setTimeout(showFingerM, 3000);
 	}
 }
 
 //check if range input is touched
 function touchedR(){
-	touchR = 'true';
+	touchR = true;
+	localStorage.setItem("touchedR", 'true');
 	fingerR.innerHTML = '';
-	touchRPhp.innerHTML = '<input type="hidden" name="touchR_php" value="true">'; 
-	touchRPhp2.innerHTML = '<input type="hidden" name="touchR_php" value="true">'; 
+	if(!touchM && touch){
+		setTimeout(showFingerM, 3000);
+	}
+}
+
+//check if mixed color is touched
+function touchedM(){
+	touchM = true;
+	localStorage.setItem("touchedM", 'true');
+	fingerM.innerHTML = '';
 }
 
 //change color by modal
@@ -107,7 +153,7 @@ function changeColor1(color, name, nameJa){
 	nameJa1 = nameJa;
 	color1.style.background = rgb1;
 	color1.style.color = textColor(color);
-	if(colorName === 'true'){
+	if(colorName){
 		if(language === 'en'){
 			color1.innerHTML = name;
 		}else{
@@ -130,7 +176,7 @@ function changeColor2(color, name, nameJa){
 	nameJa2 = nameJa;
 	color2.style.background = rgb2;
 	color2.style.color = textColor(color);
-	if(colorName === 'true'){
+	if(colorName){
 		if(language === 'en'){
 			color2.innerHTML = name;
 		}else{
@@ -147,10 +193,44 @@ function changeColor2(color, name, nameJa){
 	}
 }
 
-//change color by range input
-let ratio = document.getElementById('ratio');
-ratio.addEventListener('input', function(){
-	ratio = this.value;
+//find base colors from a mixed color
+function changeColorMixed(col1, na1, naJa1, col2, na2, naJa2){
+	rgb1 = col1;
+	rgb2 = col2;
+	name1 = na1;
+	name2 = na2;
+	nameJa1 = naJa1;
+	nameJa2 = naJa2;
+	color1.style.background = rgb1;
+	color2.style.background = rgb2;
+	color1.style.color = textColor(col1);
+	color2.style.color = textColor(col2);
+	if(colorName){
+		if(language === 'en'){
+			color1.innerHTML = na1;
+			color2.innerHTML = na2;
+		}else{
+			color1.innerHTML = naJa1;
+			color2.innerHTML = naJa2;
+		}
+	}
+
+	if(gradient){
+		calcAndShowGrad();
+		calcAndShowGradW();
+	}else{
+		calcAndShow();
+		calcAndShowW();
+	}
+
+	document.getElementById('ratio').value = 10;
+	displayMixedColor();
+}
+
+//change color(mix ratio) by range input
+window.onload = displayMixedColor();
+function displayMixedColor() {
+	ratio = document.getElementById('ratio').value;
 	t = ratio / 20;
 	
 	if(gradient){
@@ -160,13 +240,29 @@ ratio.addEventListener('input', function(){
 		calcAndShow();
 		calcAndShowW();
 	}
-	touchedR();
-});
+}
 
-//change color (mix white) by range input
-let white = document.getElementById('white');
-white.addEventListener('input', function(){
-	white = this.value;
+//change color(mix ratio) by buttons
+function toLeft(){
+	ratio = document.getElementById('ratio').value--;
+	if(ratio < 0){
+		ratio = 0;
+	}
+	displayMixedColor();
+}
+
+function toRight(){
+		ratio = document.getElementById('ratio').value++;
+		if(ratio > 20){
+			ratio = 20;
+		}
+		displayMixedColor();
+}
+
+//change color(mix white) by range input
+window.onload = displayWhiteMixedColor();
+function displayWhiteMixedColor() {
+	white = document.getElementById('white').value;
 	tw = white / 20;
 	
 	if(gradient){
@@ -174,19 +270,35 @@ white.addEventListener('input', function(){
 	}else{
 		calcAndShowW();
 	}
-	touchedR();
-});
+}
+
+//change color(mix white) by buttons
+function lessWhite(){
+	white = document.getElementById('white').value--;
+	if(white < 0){
+		white = 0;
+	}
+	displayWhiteMixedColor();
+}
+
+function moreWhite(){
+		white = document.getElementById('white').value++;
+		if(white > 20){
+			white = 20;
+		}
+		displayWhiteMixedColor();
+}
 
 //change color by color input
 let palette1 = document.getElementById('palette1');
-palette1.value = "#ffffff"; //white
+palette1.value = "#eeeeee"; //white
 palette1.addEventListener('change', function(){
 	rgb1 = this.value;
 	name1 = 'Palette 1';
 	nameJa1 = 'パレット1';
 	color1.style.background = rgb1;
 	color1.style.color = textColor(rgb1);
-	if(colorName === 'true'){
+	if(colorName){
 		if(language === 'en'){
 			color1.innerHTML = 'Palette 1';
 		}else{
@@ -204,14 +316,14 @@ palette1.addEventListener('change', function(){
 });
 
 let palette2 = document.getElementById('palette2');
-palette2.value = "#ffffff"; //white
+palette2.value = "#eeeeee"; //white
 palette2.addEventListener('change', function(){
 	rgb2 = this.value;
 	name2 = 'Palette 2';
 	nameJa2 = 'パレット2';
 	color2.style.background = rgb2;
 	color2.style.color = textColor(rgb2);
-	if(colorName === 'true'){
+	if(colorName){
 		if(language === 'en'){
 			color2.innerHTML = 'Palette 2';
 		}else{
@@ -331,7 +443,7 @@ function dispGradW(){
 
 //color name text on/off
 function colName(){
-	if(colorName === 'true'){
+	if(colorName){
 		hideName();
 	}else{
 		showName();
@@ -341,15 +453,13 @@ function colName(){
 function hideName(){
 	color1.innerHTML = '';
 	color2.innerHTML = '';
-	colorName = 'false';
+	colorName = false;
+	localStorage.setItem("nameDisp", 'false');
 	if(language === 'en'){
 		colNameBtn.innerHTML = '<button class="btn btn-outline-secondary btn-sm" onclick="colName()" id="colNameText">Color Name</button>';
 	}else{
 		colNameBtn.innerHTML = '<button class="btn btn-outline-secondary btn-sm" onclick="colName()" id="colNameText">色名</button>';
 	}
-	//post method codes
-	colorNamePhp.innerHTML = '<input type="hidden" name="color_name_php" value="false">';
-	colorNamePhp2.innerHTML = '<input type="hidden" name="color_name_php" value="false">';
 }
 
 function showName(){
@@ -360,15 +470,13 @@ function showName(){
 		color1.innerHTML = nameJa1;
 		color2.innerHTML = nameJa2;
 	}
-	colorName = 'true';
+	colorName = true;
+	localStorage.setItem("nameDisp", 'true');
 	if(language === 'en'){
 		colNameBtn.innerHTML = '<button class="btn btn-secondary btn-sm" onclick="colName()" id="colNameText">Color Name</button>';
 	}else{
 		colNameBtn.innerHTML = '<button class="btn btn-secondary btn-sm" onclick="colName()" id="colNameText">色名</button>';
 	}
-	//post method codes
-	colorNamePhp.innerHTML = '<input type="hidden" name="color_name_php" value="true">';
-	colorNamePhp2.innerHTML = '<input type="hidden" name="color_name_php" value="true">';
 }
 
 function langEn(){
@@ -378,12 +486,9 @@ function langEn(){
 	text3.innerHTML = 'Mix Ratio';
 	text4.innerHTML = 'Mix with White';
 	text5.innerHTML = 'Mix More Color';
-	modalText1.innerHTML = 'Color 1';
-	modalText2.innerHTML = 'Color 2';
-
-	//post method codes
-	langPhp.innerHTML = '<input type="hidden" name="language_php" value="en">';
-	langPhp2.innerHTML = '<input type="hidden" name="language_php" value="en">';
+	modalText1.innerHTML = 'Select Color 1';
+	modalText2.innerHTML = 'Select Color 2';
+	modalTextMixed.innerHTML = 'Select from Mixed Color';
 
 	//language buttons
 	enBtn.innerHTML = '<button class="btn btn-secondary btn-sm float-end mt-2" onclick="langEn()">English</button>';
@@ -401,28 +506,26 @@ function langEn(){
 	lcsText2.innerHTML = 'Mixbox is provided under the CC BY-NC 4.0 license for non-commercial use only.';
 
 	//color name text
-	if(colorName === 'true'){
+	if(colorName){
 		color1.innerHTML = name1;
 		color2.innerHTML = name2;
 	}
 
 	//change language
 	language = 'en';
+	localStorage.setItem("lang", 'en');
 }
 
 function langJa(){
 	//basic text
 	text1.innerHTML = '色1';
 	text2.innerHTML = '色2';
-	text3.innerHTML = '混ぜ比率';
+	text3.innerHTML = '混合比';
 	text4.innerHTML = '白を混ぜる';
 	text5.innerHTML = 'もっと色を混ぜる';
-	modalText1.innerHTML = '色1';
-	modalText2.innerHTML = '色2';
-
-	//post method codes
-	langPhp.innerHTML = '<input type="hidden" name="language_php" value="ja">';
-	langPhp2.innerHTML = '<input type="hidden" name="language_php" value="ja">';
+	modalText1.innerHTML = '色1を選択';
+	modalText2.innerHTML = '色2を選択';
+	modalTextMixed.innerHTML = '混色から選択';
 
 	//language buttons
 	enBtn.innerHTML = '<button class="btn btn-outline-secondary btn-sm float-end mt-2" onclick="langEn()">English</button>';
@@ -436,17 +539,18 @@ function langJa(){
 	//license modal text
 	lcsBtn.innerHTML = 'ライセンス';
 	lcsHd.innerHTML = 'ライセンス';
-	lcsText1.innerHTML = 'Mixboxサイトに掲載されている、絵具を混ぜたときの色をRGBで再現する関数を使用しています。';
+	lcsText1.innerHTML = '本サイトはMixboxサイトに掲載されている、絵具を混ぜたときの色をRGBで再現する関数を使用しています。';
 	lcsText2.innerHTML = 'Mixboxは CC BY-NC 4.0 ライセンスにより非営利目的のみで提供されています。';
 
 	//color name text
-	if(colorName === 'true'){
+	if(colorName){
 		color1.innerHTML = nameJa1;
 		color2.innerHTML = nameJa2;
 	}
 
 	//change language
 	language = 'ja';
+	localStorage.setItem("lang", 'ja');
 }
 
 //change text color based on background color

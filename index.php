@@ -25,41 +25,15 @@
 	<link rel="preconnect" href="https://fonts.gstatic.com">
 	<link href="https://fonts.googleapis.com/css2?family=Zen+Maru+Gothic&display=swap" rel="stylesheet">
 
+	<!-- favicon -->
+	<link rel=”icon” href=“/img/favicon.ico”>
+
 	<!-- stylesheet -->
 	<link href="css/style.css" rel="stylesheet">
 
 </head>
 <body>
 	<?php
-	// receive values from mix-more.php
-	if(isset($_POST['touch_php'])){
-		$touch = $_POST['touch_php'];
-		$first_visit = 'false';
-	}else{
-		$touch = 'false';
-		$first_visit = 'true';
-	}
-	if(isset($_POST['touchR_php'])){
-		$touchR = $_POST['touchR_php'];
-	}else{
-		$touchR = 'false';
-	}
-	if(isset($_POST['touchM_php'])){
-		$touchM = $_POST['touchM_php'];
-	}else{
-		$touchM = 'false';
-	}
-	if(isset($_POST['language_php'])){
-		$language = $_POST['language_php'];
-	}else{
-		$language = 'en';
-	}
-	if(isset($_POST['color_name_php'])){
-		$color_name = $_POST['color_name_php'];
-	}else{
-		$color_name = 'true';
-	}
-
 	// set colors
 	$colors = [
 		['color' => '#feec00', 'name' => 'Cadmium Yellow', 'name_ja' => 'カドミウム<br>イエロー'], // 0
@@ -77,6 +51,7 @@
 		['color' => '#7b4800', 'name' => 'Burnt Sienna', 'name_ja' => 'バーントシェンナ'], // 12
 		['color' => '#cb9d06', 'name' => 'Yellow Ochre', 'name_ja' => 'イエローオーカー'], // 13
 		['color' => '#161617', 'name' => 'Mars Black', 'name_ja' => 'マルスブラック'], // 14
+		['color' => '#f3f4f7', 'name' => 'Titanium White', 'name_ja' => 'チタニウム<br>ホワイト'], // 15
 	];
 
 	// set first colors(put array number)
@@ -90,16 +65,11 @@
 				<div class="row">
 
 					<div class="col">
-						<form action="index.php" method="post">
+						<a href="index.php">
 							<button type="submit" class="text-decoration-none bg-transparent border-0">
 								<h1 class="text-muted text-center display-6 fw-bold"><span class="text-info">P</span>aint<span class="text-danger">M</span>ix<i class="fa-solid fa-palette"></i></h1>
-								<span id="langPhp"><input type="hidden" name="language_php" value="en"></span>
-								<span id="touchPhp"><input type="hidden" name="touch_php" value="false"></span>
-								<span id="touchRPhp"><input type="hidden" name="touchR_php" value="false"></span>
-								<span id="touchMPhp"><input type="hidden" name="touchM_php" value="false"></span>
-								<span id="colorNamePhp"><input type="hidden" name="color_name_php" value="false"></span>
 							</button>
-						</form>
+						</a>
 					</div>
 
 					<div class="col-auto">
@@ -164,33 +134,51 @@
 									<div class="finger-space">
 										<span id="fingerR"></span>
 									</div>
-									<div class="w-50 mx-auto">
-										<input type="range" value="10" min="0" max="20" id="ratio" class="form-range z-2">
+									<div class="d-flex align-items-center justify-content-center fw-bold text-muted">
+										<button onclick="toLeft();" class="bg-white text-muted border-0 me-4 mb-1">
+											<i class="fa-solid fa-arrow-left"></i>
+										</button>
+										<span class="w-50">
+											<input type="range" value="10" min="0" max="20" id="ratio" class="form-range z-2" oninput="displayMixedColor(); touchedR();">
+										</span>
+										<button onclick="toRight();" class="bg-white text-muted border-0 ms-4 mb-1">
+											<i class="fa-solid fa-arrow-right"></i>
+										</button>
 									</div>
 								</div>
 							</div>
 							
 							<!-- color mix result -->
+							<div class="finger-space">
+								<span id="fingerM"></span>
+							</div>
 							<div class="row mt-1">
 								<div class="col">
-									<div class="rounded result" id="result">
+									<div class="rounded result" id="result" data-bs-toggle="modal" data-bs-target="#mixedModal" onclick="touchedM();">
 									</div>
 								</div>
 							</div>
 
+							<!-- mixed color modal -->
+							<?php
+							include 'modal/mixed.php';
+							?>
+				
 							<!-- input range to mix white -->
 							<div class="row mt-3">
 								<div class="col text-center">
 									<label for="ratio" class="fw-bold text-muted" id="text4">Mix with White</label>
 									<div class="rounded finger-space"></div>
 									<div class="d-flex align-items-center justify-content-center fw-bold text-muted">
-										<i class="fa-solid fa-minus mb-1"></i>
-										&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+										<button onclick="lessWhite();" class="bg-white text-muted border-0 me-4 mb-1">
+											<i class="fa-solid fa-minus"></i>
+										</button>
 										<span class="w-50">
-											<input type="range" value="10" min="0" max="20" id="white" class="form-range">
+											<input type="range" value="10" min="0" max="20" id="white" class="form-range" oninput="displayWhiteMixedColor(); touchedR();">
 										</span>
-										&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-										<i class="fa-solid fa-plus mb-1"></i>
+										<button onclick="moreWhite();" class="bg-white text-muted border-0 ms-4 mb-1">
+											<i class="fa-solid fa-plus"></i>
+										</button>
 									</div>
 								</div>
 							</div>
@@ -206,16 +194,11 @@
 							<!-- link to add more color -->
 							<div class="row mt-4 mb-3">
 								<div class="col">
-									<form action="mix-more.php" method="post">
-										<button type="submit" class="btn btn-outline-secondary form-control">
+									<a href="mix-more.php">
+										<button type="submit" class="btn btn-sm btn-outline-secondary form-control">
 											<i class="fa-solid fa-plus"></i> <span id="text5">Mix More Color</span>
-											<span id="langPhp2"><input type="hidden" name="language_php" value="en"></span>
-											<span id="touchPhp2"><input type="hidden" name="touch_php" value="false"></span>
-											<span id="touchRPhp2"><input type="hidden" name="touchR_php" value="false"></span>
-											<span id="touchMPhp2"><input type="hidden" name="touchM_php" value="false"></span>
-											<span id="colorNamePhp2"><input type="hidden" name="color_name_php" value="false"></span>
 										</button>
-									</form>
+									</a>
 									
 								</div>
 							</div>
@@ -240,7 +223,7 @@
 					</div>
 				</div>
 
-				<!-- license modals -->
+				<!-- license modal -->
 				<?php
 				include 'modal/license.php';
 				?>
@@ -258,20 +241,6 @@
 		var name2 = '<?= $colors[$color2]['name']; ?>';
 		var nameJa1 = '<?= $colors[$color1]['name_ja']; ?>';
 		var nameJa2 = '<?= $colors[$color2]['name_ja']; ?>';
-
-		//if touched
-		var touch = '<?=$touch;?>';
-		var touchR = '<?=$touchR;?>';
-		var touchM = '<?=$touchM;?>';
-
-		//language
-		var language = '<?=$language;?>';
-
-		//color name text on/off
-		var colorName = '<?=$color_name;?>';
-
-		//check if first visit
-		var firstVisit = '<?=$first_visit;?>'
 	</script>
 
 	<script src="js/mix.js"></script>

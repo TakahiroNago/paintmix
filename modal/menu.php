@@ -2,10 +2,9 @@
 <div class="modal fade" id="menuModal" tabindex="-1" aria-labelledby="menuModalLabel" aria-hidden="true">
 	<div class="modal-dialog">
 		<div class="modal-content modal-menu float-end">
-			<div class="modal-header">
-				<h2 class="h5" id="menuHd">Options</h2>
-			</div>
 			<div class="modal-body">
+				<h2 class="h6" id="menuHd">Options</h2>
+				<hr>
 
 				<!-- gradient on/off button-->
 				<div>
