@@ -518,13 +518,13 @@ function langEn(){
 
 function langJa(){
 	//basic text
-	text1.innerHTML = '色1';
-	text2.innerHTML = '色2';
+	text1.innerHTML = 'カラー1';
+	text2.innerHTML = 'カラー2';
 	text3.innerHTML = '混合比';
 	text4.innerHTML = '白を混ぜる';
 	text5.innerHTML = 'もっと色を混ぜる';
-	modalText1.innerHTML = '色1を選択';
-	modalText2.innerHTML = '色2を選択';
+	modalText1.innerHTML = 'カラー1を選択';
+	modalText2.innerHTML = 'カラー2を選択';
 	modalTextMixed.innerHTML = '混色から選択';
 
 	//language buttons
@@ -537,7 +537,7 @@ function langJa(){
 	colNameText.innerHTML = '色名';
 
 	//license modal text
-	lcsBtn.innerHTML = 'ライセンス';
+	lcsBtn.innerHTML = '★ライセンス★';
 	lcsHd.innerHTML = 'ライセンス';
 	lcsText1.innerHTML = '本サイトはMixboxサイトに掲載されている、絵具を混ぜたときの色をRGBで再現する関数を使用しています。';
 	lcsText2.innerHTML = 'Mixboxは CC BY-NC 4.0 ライセンスにより非営利目的のみで提供されています。';
